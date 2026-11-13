@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab Maya TJKT — Media Transmisi & Telekomunikasi Dasar</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            cyber: {
+              bg: '#090d16',
+              panel: '#0f172a',
+              card: '#1e293b',
+              border: '#334155',
+              cyan: '#06b6d4',
+              emerald: '#10b981',
+              amber: '#f59e0b',
+              rose: '#f43f5e',
+              purple: '#8b5cf6'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Custom Scrollbar untuk tema Cyber-Tech */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #06b6d4;
+    }
+
+    /* Efek Grid Latar Belakang Kanvas */
+    .bg-cyber-grid {
+      background-size: 28px 28px;
+      background-image: 
+        linear-gradient(to right, rgba(6, 182, 212, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(6, 182, 212, 0.06) 1px, transparent 1px);
+    }
+
+    /* Animasi Glow & Pulse */
+    @keyframes pulseGlow {
+      0%, 100% { filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.6)); }
+      50% { filter: drop-shadow(0 0 14px rgba(6, 182, 212, 0.95)); }
+    }
+    .svg-glow-cyan {
+      animation: pulseGlow 2s infinite;
+    }
+
+    @keyframes blinkLed {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.25; }
+    }
+    .led-blink {
+      animation: blinkLed 0.45s infinite;
+    }
+
+    /* Custom Range Slider */
+    input[type="range"] {
+      -webkit-appearance: none;
+      background: transparent;
+    }
+    input[type="range"]::-webkit-slider-runnable-track {
+      height: 6px;
+      border-radius: 999px;
+      background: #1e293b;
+      border: 1px solid #334155;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 16px;
+      width: 16px;
+      border-radius: 50%;
+      background: #06b6d4;
+      cursor: pointer;
+      margin-top: -6px;
+      box-shadow: 0 0 10px rgba(6, 182, 212, 0.8);
+      transition: transform 0.15s ease;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+  </style>
+</head>
+<body class="bg-cyber-bg text-slate-200 font-sans min-h-screen flex flex-col selection:bg-cyan-500 selection:text-slate-950">
+
+  <!-- ==================== HEADER NAVIGASI ==================== -->
+  <header class="bg-cyber-panel/95 backdrop-blur-md border-b border-slate-800 sticky top-0 z-40 px-4 py-3 shadow-lg">
+    <div class="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-3">
+      <!-- Brand / Title -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-slate-950 shadow-lg shadow-cyan-500/25">
+          <i class="fa-solid fa-network-wired text-lg"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-white">
+              Lab Maya TJKT
+            </h1>
+            <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">
+              v2.5 • Layer 1 Simulator
+            </span>
+          </div>
+          <p class="text-xs text-slate-400">Media Transmisi &amp; Jaringan Telekomunikasi Dasar</p>
+        </div>
+      </div>
+
+      <!-- Modal Navigation Buttons -->
+      <nav class="flex flex-wrap items-center gap-2">
+        <button onclick="openModal('modalTeori')" class="px-3 py-2 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-slate-200 hover:text-cyan-300 border border-slate-700 hover:border-cyan-500/50 text-xs sm:text-sm font-medium transition flex items-center gap-2 shadow-sm">
+          <i class="fa-solid fa-book-open text-cyan-400"></i>
+          <span>Teori Singkat</span>
+        </button>
+        <button onclick="openModal('modalInstruksi')" class="px-3 py-2 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-slate-200 hover:text-amber-300 border border-slate-700 hover:border-amber-500/50 text-xs sm:text-sm font-medium transition flex items-center gap-2 shadow-sm">
+          <i class="fa-solid fa-list-check text-amber-400"></i>
+          <span>Instruksi Praktikum</span>
+        </button>
+        <button onclick="openModal('modalLkpd')" class="px-3 py-2 rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white text-xs sm:text-sm font-semibold transition flex items-center gap-2 shadow-md shadow-cyan-500/20">
+          <i class="fa-solid fa-clipboard-question"></i>
+          <span>Pertanyaan LKPD</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN 3-COLUMN WORKSPACE ==================== -->
+  <main class="flex-1 max-w-[1600px] w-full mx-auto p-3 sm:p-4 grid grid-cols-1 lg:grid-cols-12 gap-4">
+
+    <!-- ==================== KOLOM KIRI: KONTROL PARAMETER ==================== -->
+    <section class="lg:col-span-3 bg-cyber-panel border border-slate-800 rounded-2xl p-4 flex flex-col gap-4 shadow-xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+        <h2 class="text-sm font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-2">
+          <i class="fa-solid fa-sliders"></i> Konfigurasi Perangkat &amp; Media
+        </h2>
+        <span class="text-[11px] font-mono text-slate-400 bg-slate-800 px-2 py-0.5 rounded">INPUT</span>
+      </div>
+
+      <!-- Node A (Pengirim) -->
+      <div class="space-y-1.5">
+        <label for="nodeA" class="block text-xs font-semibold text-slate-300">
+          <i class="fa-solid fa-upload text-cyan-400 mr-1"></i> Perangkat Pengirim (Node A)
+        </label>
+        <select id="nodeA" onchange="updatePreview()" class="w-full bg-slate-900 border border-slate-700 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 rounded-xl px-3 py-2 text-xs sm:text-sm text-white outline-none transition">
+          <option value="pc">PC / Workstation (NIC RJ45 / BNC)</option>
+          <option value="switch">Switch Layer 2 (Port RJ45)</option>
+          <option value="router">Router Enterprise (Port RJ45 / SFP)</option>
+          <option value="hub">Ethernet Hub (Legacy Repeater)</option>
+          <option value="olt">OLT / Optical Media Converter (SFP)</option>
+        </select>
+      </div>
+
+      <!-- Node B (Penerima) -->
+      <div class="space-y-1.5">
+        <label for="nodeB" class="block text-xs font-semibold text-slate-300">
+          <i class="fa-solid fa-download text-emerald-400 mr-1"></i> Perangkat Penerima (Node B)
+        </label>
+        <select id="nodeB" onchange="updatePreview()" class="w-full bg-slate-900 border border-slate-700 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 rounded-xl px-3 py-2 text-xs sm:text-sm text-white outline-none transition">
+          <option value="switch" selected>Switch Layer 2 (Port RJ45)</option>
+          <option value="pc">PC / Workstation (NIC RJ45 / BNC)</option>
+          <option value="router">Router Enterprise (Port RJ45 / SFP)</option>
+          <option value="hub">Ethernet Hub (Legacy Repeater)</option>
+          <option value="ont">ONT / Optical Media Converter (SC/LC)</option>
+        </select>
+      </div>
+
+      <!-- Jenis Media Transmisi -->
+      <div class="space-y-1.5">
+        <label for="mediaType" class="block text-xs font-semibold text-slate-300">
+          <i class="fa-solid fa-ethernet text-amber-400 mr-1"></i> Jenis Media Transmisi / Kabel
+        </label>
+        <select id="mediaType" onchange="updatePreview()" class="w-full bg-slate-900 border border-slate-700 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 rounded-xl px-3 py-2 text-xs sm:text-sm text-white outline-none transition">
+          <option value="utp_straight">UTP Cat5e/Cat6 — Straight-Through (T568B–T568B)</option>
+          <option value="utp_cross">UTP Cat5e/Cat6 — Cross-Over (T568A–T568B)</option>
+          <option value="coaxial">Kabel Coaxial RG-6 / RG-58 (Konektor BNC)</option>
+          <option value="fiber_sm">Fiber Optik Single-Mode (Patchcord LC-SC)</option>
+        </select>
+        <div id="mediaSpecBadge" class="text-[11px] text-slate-400 bg-slate-900/90 border border-slate-800 rounded-lg px-2.5 py-1.5 flex items-center justify-between">
+          <span>Batas Maksimal: <strong id="maxDistLabel" class="text-cyan-400">100 m</strong></span>
+          <span>Sinyal: <strong id="signalTypeLabel" class="text-amber-400">Listrik (Tegangan)</strong></span>
+        </div>
+      </div>
+
+      <!-- Auto-MDIX Toggle (Edukasi Konfigurasi Nyata) -->
+      <div class="flex items-center justify-between bg-slate-900/80 border border-slate-800 rounded-xl px-3 py-2">
+        <div>
+          <span class="text-xs font-semibold text-slate-200 block">Fitur Auto-MDI/MDIX</span>
+          <span class="text-[10px] text-slate-400">Otomatis tukar pin TX/RX pada perangkat modern</span>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="autoMdixToggle" onchange="updatePreview()" class="sr-only peer" />
+          <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-cyan-500"></div>
+        </label>
+      </div>
+
+      <!-- Slider Jarak Kabel -->
+      <div class="space-y-1.5 bg-slate-900/60 border border-slate-800/90 rounded-xl p-3">
+        <div class="flex items-center justify-between">
+          <label for="distanceSlider" class="text-xs font-semibold text-slate-300">
+            <i class="fa-solid fa-ruler-horizontal text-cyan-400 mr-1"></i> Panjang / Jarak Kabel
+          </label>
+          <span id="distanceValue" class="text-xs font-mono font-bold text-cyan-400 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-500/30">
+            50 meter
+          </span>
+        </div>
+        <input type="range" id="distanceSlider" min="1" max="1000" value="50" oninput="updatePreview()" class="w-full" />
+        <div class="flex justify-between text-[10px] font-mono text-slate-500">
+          <span>1 m</span>
+          <span>100 m (UTP)</span>
+          <span>500 m (Coax)</span>
+          <span>1000 m</span>
+        </div>
+      </div>
+
+      <!-- Slider/Level Interferensi EMI -->
+      <div class="space-y-1.5 bg-slate-900/60 border border-slate-800/90 rounded-xl p-3">
+        <div class="flex items-center justify-between">
+          <label for="emiLevel" class="text-xs font-semibold text-slate-300">
+            <i class="fa-solid fa-bolt text-amber-400 mr-1"></i> Interferensi EMI / Noise
+          </label>
+          <span id="emiBadge" class="text-[11px] font-semibold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+            Rendah (Aman)
+          </span>
+        </div>
+        <select id="emiLevel" onchange="updatePreview()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none">
+          <option value="low">Rendah — Ruang Server / Kantor Standar</option>
+          <option value="medium">Sedang — Dekat Jalur Listrik AC 220V</option>
+          <option value="high">Tinggi — Dekat Mesin Industri / Trafo Tegangan Tinggi</option>
+        </select>
+      </div>
+
+      <!-- Input Data Bit Biner -->
+      <div class="space-y-1.5">
+        <div class="flex items-center justify-between">
+          <label for="binaryInput" class="text-xs font-semibold text-slate-300">
+            <i class="fa-solid fa-binary text-purple-400 mr-1"></i> Data Frame Biner (8-Bit)
+          </label>
+          <button type="button" onclick="randomizeBits()" class="text-[11px] text-cyan-400 hover:text-cyan-300 underline">
+            Acak Bit
+          </button>
+        </div>
+        <input type="text" id="binaryInput" maxlength="8" value="10110010" oninput="sanitizeBinaryInput(this)" placeholder="Contoh: 10110010" class="w-full bg-slate-900 border border-slate-700 focus:border-purple-500 rounded-xl px-3 py-2 font-mono text-sm tracking-[0.25em] text-center font-bold text-purple-300 outline-none" />
+      </div>
+
+      <!-- Tombol Aksi -->
+      <div class="grid grid-cols-3 gap-2 pt-1 mt-auto">
+        <button id="btnRunSim" onclick="startSimulation()" class="col-span-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold py-2.5 px-3 rounded-xl text-xs sm:text-sm shadow-lg shadow-cyan-500/25 transition flex items-center justify-center gap-2 cursor-pointer">
+          <i class="fa-solid fa-play"></i>
+          <span>Uji &amp; Kirim Paket</span>
+        </button>
+        <button onclick="resetSimulation()" class="col-span-1 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-2.5 px-3 rounded-xl text-xs sm:text-sm border border-slate-700 transition flex items-center justify-center gap-1.5 cursor-pointer">
+          <i class="fa-solid fa-rotate-right"></i>
+          <span>Reset</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== KOLOM TENGAH: KANVAS VISUAL SVG & OSILOSKOP ==================== -->
+    <section class="lg:col-span-6 bg-cyber-panel border border-slate-800 rounded-2xl p-4 flex flex-col gap-3 shadow-xl">
+      <!-- Top Status Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping"></span>
+          <h2 class="text-sm font-bold uppercase tracking-wider text-white">
+            Visualisasi Topologi &amp; Perambatan Sinyal
+          </h2>
+        </div>
+
+        <!-- Badge Status Kecocokan Real-time -->
+        <div id="statusBadge" class="px-3 py-1 rounded-full text-xs font-bold tracking-wide flex items-center gap-1.5 bg-emerald-500/15 text-emerald-400 border border-emerald-500/40">
+          <i class="fa-solid fa-circle-check"></i>
+          <span id="statusBadgeText">KONEKSI VALID (SIAP)</span>
+        </div>
+      </div>
+
+      <!-- Kanvas SVG Utama -->
+      <div class="relative flex-1 min-h-[310px] bg-slate-950 bg-cyber-grid border border-slate-800/90 rounded-2xl overflow-hidden flex items-center justify-center p-2">
+        <!-- Info Overlay Kiri Atas -->
+        <div class="absolute top-3 left-3 bg-slate-900/90 backdrop-blur border border-slate-800 rounded-lg px-2.5 py-1.5 text-[11px] font-mono text-slate-300 z-10">
+          <div>Media: <span id="overlayMedia" class="text-cyan-400 font-semibold">UTP Straight-Through</span></div>
+          <div>Jarak: <span id="overlayDist" class="text-white font-semibold">50 m</span> | Redaman: <span id="overlayAtten" class="text-emerald-400 font-semibold">-2.1 dB</span></div>
+        </div>
+
+        <!-- Info Overlay Kanan Atas -->
+        <div class="absolute top-3 right-3 bg-slate-900/90 backdrop-blur border border-slate-800 rounded-lg px-2.5 py-1.5 text-[11px] font-mono text-slate-300 z-10 text-right">
+          <div>Kecepatan Rambat: <span id="overlaySpeed" class="text-amber-400 font-semibold">~2.0 × 10⁸ m/s</span></div>
+          <div>Frame Bit: <span id="overlayBits" class="text-purple-400 font-bold tracking-widest">10110010</span></div>
+        </div>
+
+        <!-- SVG Interactive Diagram -->
+        <svg id="networkSvg" viewBox="0 0 800 340" class="w-full h-full max-h-[350px] select-none">
+          <defs>
+            <!-- Gradients untuk kabel -->
+            <linearGradient id="gradUtp" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#0284c7" />
+              <stop offset="50%" stop-color="#06b6d4" />
+              <stop offset="100%" stop-color="#0284c7" />
+            </linearGradient>
+            <linearGradient id="gradCoax" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#b45309" />
+              <stop offset="50%" stop-color="#f59e0b" />
+              <stop offset="100%" stop-color="#b45309" />
+            </linearGradient>
+            <linearGradient id="gradFiber" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#7c3aed" />
+              <stop offset="50%" stop-color="#e879f9" />
+              <stop offset="100%" stop-color="#06b6d4" />
+            </linearGradient>
+            <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="4" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          <!-- Zona Interferensi EMI di Tengah (Muncul jika EMI Sedang/Tinggi) -->
+          <g id="emiZoneGroup" opacity="0">
+            <rect x="315" y="65" width="170" height="210" rx="16" fill="rgba(245, 158, 11, 0.08)" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6 4" />
+            <text x="400" y="85" text-anchor="middle" fill="#fbbf24" font-size="11" font-family="JetBrains Mono" font-weight="bold">⚡ MEDAN EMI / NOISE</text>
+            <!-- Gelombang petir/interferensi -->
+            <path d="M345 105 L360 125 L348 125 L365 148" stroke="#f59e0b" stroke-width="2" fill="none" />
+            <path d="M455 105 L440 125 L452 125 L435 148" stroke="#f59e0b" stroke-width="2" fill="none" />
+            <path d="M350 245 L365 225 L353 225 L370 202" stroke="#f59e0b" stroke-width="2" fill="none" />
+            <path d="M450 245 L435 225 L447 225 L430 202" stroke="#f59e0b" stroke-width="2" fill="none" />
+          </g>
+
+          <!-- ==================== JALUR KABEL & PINOUT VISUAL ==================== -->
+          <g id="cableVisualGroup">
+            <!-- Selubung luar kabel -->
+            <rect x="175" y="135" width="450" height="70" rx="12" fill="#0f172a" stroke="#334155" stroke-width="2" />
+            
+            <!-- Grup UTP 4-Wire TX/RX Pinout (Tampil saat UTP dipilih) -->
+            <g id="utpWiresGroup">
+              <!-- Label Pin Node A -->
+              <text x="192" y="152" fill="#94a3b8" font-size="9" font-family="JetBrains Mono">1:TX+</text>
+              <text x="192" y="167" fill="#94a3b8" font-size="9" font-family="JetBrains Mono">2:TX-</text>
+              <text x="192" y="183" fill="#94a3b8" font-size="9" font-family="JetBrains Mono">3:RX+</text>
+              <text x="192" y="198" fill="#94a3b8" font-size="9" font-family="JetBrains Mono">6:RX-</text>
+
+              <!-- Label Pin Node B -->
+              <text x="608" y="152" text-anchor="end" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" id="pinB1">1:TX+</text>
+              <text x="608" y="167" text-anchor="end" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" id="pinB2">2:TX-</text>
+              <text x="608" y="183" text-anchor="end" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" id="pinB3">3:RX+</text>
+              <text x="608" y="198" text-anchor="end" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" id="pinB6">6:RX-</text>
+
+              <!-- Jalur Kabel Straight (Lurus) -->
+              <g id="straightLines">
+                <line x1="225" y1="149" x2="575" y2="149" stroke="#f97316" stroke-width="2.5" stroke-dasharray="6 2" />
+                <line x1="225" y1="164" x2="575" y2="164" stroke="#fb923c" stroke-width="2.5" />
+                <line x1="225" y1="180" x2="575" y2="180" stroke="#22c55e" stroke-width="2.5" stroke-dasharray="6 2" />
+                <line x1="225" y1="195" x2="575" y2="195" stroke="#4ade80" stroke-width="2.5" />
+              </g>
+
+              <!-- Jalur Kabel Cross-Over (Menyilang 1->3, 2->6) -->
+              <g id="crossLines" class="hidden">
+                <path d="M 225 149 C 350 149, 450 180, 575 180" stroke="#f97316" stroke-width="2.5" fill="none" />
+                <path d="M 225 164 C 350 164, 450 195, 575 195" stroke="#fb923c" stroke-width="2.5" fill="none" />
+                <path d="M 225 180 C 350 180, 450 149, 575 149" stroke="#22c55e" stroke-width="2.5" fill="none" />
+                <path d="M 225 195 C 350 195, 450 164, 575 164" stroke="#4ade80" stroke-width="2.5" fill="none" />
+              </g>
+            </g>
+
+            <!-- Grup Kabel Coaxial (Tampil saat Coaxial dipilih) -->
+            <g id="coaxWireGroup" class="hidden">
+              <rect x="190" y="152" width="420" height="36" rx="8" fill="#1e293b" stroke="#64748b" stroke-width="1.5" />
+              <line x1="190" y1="170" x2="610" y2="170" stroke="url(#gradCoax)" stroke-width="6" />
+              <text x="400" y="162" text-anchor="middle" fill="#fcd34d" font-size="10" font-family="JetBrains Mono">INTI TEMBAGA TUNGGAL (IMPEDANSI 50Ω / 75Ω)</text>
+              <text x="400" y="185" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="JetBrains Mono">Pelindung Braided Shield + Konektor BNC</text>
+            </g>
+
+            <!-- Grup Fiber Optik (Tampil saat Fiber dipilih) -->
+            <g id="fiberWireGroup" class="hidden">
+              <rect x="190" y="156" width="420" height="28" rx="14" fill="#1e1b4b" stroke="#8b5cf6" stroke-width="1.5" />
+              <line x1="195" y1="170" x2="605" y2="170" stroke="url(#gradFiber)" stroke-width="5" filter="url(#neonGlow)" />
+              <text x="400" y="150" text-anchor="middle" fill="#c084fc" font-size="10" font-family="JetBrains Mono" font-weight="bold">INTI SILIKA KACA (CORE 9µm) — TOTAL INTERNAL REFLECTION</text>
+              <text x="400" y="198" text-anchor="middle" fill="#38bdf8" font-size="9" font-family="JetBrains Mono">Kebal Interferensi EMI • Transmisi Fotons Laser 1310nm/1550nm</text>
+            </g>
+          </g>
+
+          <!-- ==================== LAYER ANIMASI PARTIKEL SINYAL / BIT ==================== -->
+          <g id="signalPacketLayer"></g>
+
+          <!-- ==================== NODE A (PERANGKAT PENGIRIM) ==================== -->
+          <g id="nodeAGroup" transform="translate(35, 105)">
+            <rect x="0" y="0" width="140" height="130" rx="16" fill="#0f172a" stroke="#06b6d4" stroke-width="2" />
+            <!-- Port Interface Box -->
+            <rect x="128" y="45" width="18" height="40" rx="4" fill="#1e293b" stroke="#06b6d4" stroke-width="1.5" />
+            <!-- Link LED Node A -->
+            <circle id="ledNodeA" cx="137" cy="55" r="4" fill="#10b981" />
+            <circle id="actNodeA" cx="137" cy="73" r="3.5" fill="#f59e0b" opacity="0.3" />
+            
+            <!-- Icon Device A -->
+            <text id="iconNodeA" x="65" y="54" text-anchor="middle" fill="#38bdf8" font-family="FontAwesome" font-size="34">&#xf108;</text>
+            <text id="labelNodeA" x="65" y="84" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold" font-family="Inter">PC / Workstation</text>
+            <text id="portNodeA" x="65" y="102" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="JetBrains Mono">Port: RJ45 (MDI)</text>
+            <rect x="25" y="110" width="80" height="14" rx="4" fill="#083344" />
+            <text x="65" y="120" text-anchor="middle" fill="#22d3ee" font-size="9" font-weight="bold" font-family="JetBrains Mono">NODE A (TX)</text>
+          </g>
+
+          <!-- ==================== NODE B (PERANGKAT PENERIMA) ==================== -->
+          <g id="nodeBGroup" transform="translate(625, 105)">
+            <rect x="0" y="0" width="140" height="130" rx="16" fill="#0f172a" stroke="#10b981" stroke-width="2" />
+            <!-- Port Interface Box -->
+            <rect x="-6" y="45" width="18" height="40" rx="4" fill="#1e293b" stroke="#10b981" stroke-width="1.5" />
+            <!-- Link LED Node B -->
+            <circle id="ledNodeB" cx="3" cy="55" r="4" fill="#10b981" />
+            <circle id="actNodeB" cx="3" cy="73" r="3.5" fill="#f59e0b" opacity="0.3" />
+
+            <!-- Icon Device B -->
+            <text id="iconNodeB" x="75" y="54" text-anchor="middle" fill="#34d399" font-family="FontAwesome" font-size="34">&#xf233;</text>
+            <text id="labelNodeB" x="75" y="84" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold" font-family="Inter">Switch Layer 2</text>
+            <text id="portNodeB" x="75" y="102" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="JetBrains Mono">Port: RJ45 (MDIX)</text>
+            <rect x="35" y="110" width="80" height="14" rx="4" fill="#064e3b" />
+            <text x="75" y="120" text-anchor="middle" fill="#6ee7b7" font-size="9" font-weight="bold" font-family="JetBrains Mono">NODE B (RX)</text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- ==================== OSILOSKOP MINI (TX vs RX WAVEFORM) ==================== -->
+      <div class="bg-slate-950 border border-slate-800 rounded-2xl p-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-wave-square text-cyan-400 text-xs"></i>
+            <span class="text-xs font-bold text-slate-200">Osiloskop Digital — Perbandingan Bentuk Gelombang Sinyal</span>
+          </div>
+          <div class="flex items-center gap-3 text-[11px] font-mono">
+            <span class="flex items-center gap-1 text-cyan-400">
+              <span class="w-2.5 h-0.5 bg-cyan-400 inline-block"></span> Sinyal Tx (Asli)
+            </span>
+            <span class="flex items-center gap-1 text-emerald-400" id="rxLegendColor">
+              <span class="w-2.5 h-0.5 bg-emerald-400 inline-block" id="rxLegendBar"></span> Sinyal Rx (Diterima)
+            </span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <!-- Canvas Tx -->
+          <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-2">
+            <div class="flex justify-between text-[10px] font-mono text-slate-400 mb-1">
+              <span>TX OUTPUT (NODE A)</span>
+              <span id="txVoltLabel" class="text-cyan-400">+2.5V / 0V (NRZ)</span>
+            </div>
+            <canvas id="canvasTx" class="w-full h-16 block rounded"></canvas>
+          </div>
+          <!-- Canvas Rx -->
+          <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-2">
+            <div class="flex justify-between text-[10px] font-mono text-slate-400 mb-1">
+              <span>RX INPUT (NODE B)</span>
+              <span id="rxQualityLabel" class="text-emerald-400">SNR: 32 dB (Jernih)</span>
+            </div>
+            <canvas id="canvasRx" class="w-full h-16 block rounded"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== KOLOM KANAN: CONSOLE LOG & EVALUASI ==================== -->
+    <section class="lg:col-span-3 bg-cyber-panel border border-slate-800 rounded-2xl p-4 flex flex-col gap-3 shadow-xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+        <h2 class="text-sm font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-2">
+          <i class="fa-solid fa-terminal"></i> Log Analisis &amp; Evaluasi
+        </h2>
+        <span class="text-[11px] font-mono text-slate-400 bg-slate-800 px-2 py-0.5 rounded">OSI LAYER 1</span>
+      </div>
+
+      <!-- Terminal Log Box -->
+      <div id="consoleLog" class="flex-1 min-h-[230px] max-h-[340px] overflow-y-auto bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-[11px] leading-relaxed space-y-2">
+        <div class="text-slate-500">[00:00:00] Sistem Lab Maya TJKT siap.</div>
+        <div class="text-cyan-400">[INFO] Silakan atur perangkat, media kabel, jarak, dan klik <span class="underline font-bold">"Uji &amp; Kirim Paket"</span>.</div>
+      </div>
+
+      <!-- Kartu Status Evaluasi Akhir -->
+      <div id="evalCard" class="bg-slate-900 border border-slate-700 rounded-xl p-3.5 space-y-2.5 transition-all">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Status Evaluasi Praktikum</span>
+          <span id="evalStatusPill" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-800 text-slate-300 border border-slate-600">
+            MENUNGGU UJI
+          </span>
+        </div>
+
+        <!-- Perbandingan Bit Terkirim vs Diterima -->
+        <div class="grid grid-cols-2 gap-2 bg-slate-950 p-2 rounded-lg border border-slate-800 font-mono text-xs">
+          <div>
+            <span class="text-[10px] text-slate-500 block">Bit Dikirim (Tx):</span>
+            <span id="evalTxBits" class="text-cyan-400 font-bold tracking-widest">10110010</span>
+          </div>
+          <div>
+            <span class="text-[10px] text-slate-500 block">Bit Diterima (Rx):</span>
+            <span id="evalRxBits" class="text-slate-400 font-bold tracking-widest">--------</span>
+          </div>
+        </div>
+
+        <!-- Metrik BER & Redaman -->
+        <div class="flex items-center justify-between text-[11px] font-mono text-slate-300 px-1">
+          <span>Bit Error Rate (BER): <strong id="evalBer" class="text-white">-</strong></span>
+          <span>Integritas: <strong id="evalIntegrity" class="text-white">-</strong></span>
+        </div>
+
+        <!-- Diagnosis & Saran Perbaikan -->
+        <div id="evalDiagnosis" class="text-xs text-slate-300 bg-slate-950/90 border border-slate-800 rounded-lg p-2.5 leading-relaxed">
+          <i class="fa-solid fa-circle-info text-cyan-400 mr-1"></i>
+          Pilih konfigurasi di panel kiri lalu jalankan simulasi untuk melihat analisis teknis konektivitas lapisan fisik.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== MODAL 1: TEORI SINGKAT ==================== -->
+  <div id="modalTeori" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-cyber-panel border border-slate-700 rounded-2xl max-w-4xl w-full max-h-[88vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-900">
+        <h3 class="text-base sm:text-lg font-bold text-cyan-400 flex items-center gap-2">
+          <i class="fa-solid fa-book-open"></i> Teori Singkat: Media Transmisi &amp; Telekomunikasi Dasar
+        </h3>
+        <button onclick="closeModal('modalTeori')" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-rose-500/20 hover:text-rose-400 text-slate-400 flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-5 overflow-y-auto space-y-5 text-sm text-slate-300 leading-relaxed">
+        <!-- 1. Jenis Kabel -->
+        <div>
+          <h4 class="text-white font-bold text-base mb-2 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-md bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xs">1</span>
+            Jenis Media Transmisi Kabel (Guided Media)
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5">
+              <div class="font-bold text-cyan-400 mb-1">UTP Straight-Through (T568B – T568B)</div>
+              <p class="text-xs text-slate-400">Digunakan untuk menghubungkan perangkat <strong>berbeda jenis</strong> (MDI ke MDIX), seperti <em>PC ke Switch</em> atau <em>Router ke Switch</em>. Susunan pin 1, 2, 3, 6 pada kedua ujung identik.</p>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5">
+              <div class="font-bold text-emerald-400 mb-1">UTP Cross-Over (T568A – T568B)</div>
+              <p class="text-xs text-slate-400">Digunakan untuk menghubungkan perangkat <strong>sejenis</strong> (MDI ke MDI atau MDIX ke MDIX), seperti <em>PC ke PC</em> atau <em>Switch ke Switch</em> (tanpa Auto-MDIX). Pin TX (1,2) disilangkan ke pin RX (3,6).</p>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5">
+              <div class="font-bold text-amber-400 mb-1">Kabel Coaxial (RG-6 / RG-58)</div>
+              <p class="text-xs text-slate-400">Memiliki inti konduktor tembaga tunggal dengan pelindung anyaman logam (braided shield). Jarak jangkau hingga <strong>500 meter</strong> (10Base5), lebih tahan EMI dibanding UTP, menggunakan konektor BNC/F-Type.</p>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5">
+              <div class="font-bold text-purple-400 mb-1">Fiber Optik (Single-Mode &amp; Multi-Mode)</div>
+              <p class="text-xs text-slate-400">Mentransmisikan data berupa <strong>pulsa cahaya laser/LED</strong> melalui inti kaca silika. Single-Mode (core 9µm) menjangkau puluhan kilometer, bandwidth sangat tinggi, dan <strong>100% kebal terhadap interferensi EMI</strong>.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Standar Warna TIA/EIA 568A & 568B -->
+        <div>
+          <h4 class="text-white font-bold text-base mb-2 flex items-center gap-2">
+            <span class="w-6 h-6 rounded-md bg-amber-500/20 text-amber-400 flex items-center justify-center text-xs">2</span>
+            Standar Urutan Warna Pin RJ45 (TIA/EIA-568A vs 568B)
+          </h4>
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left border border-slate-800 rounded-xl overflow-hidden">
+              <thead class="bg-slate-900 text-slate-300 font-mono">
+                <tr>
+                  <th class="p-2.5 border-b border-slate-800">Pin</th>
+                  <th class="p-2.5 border-b border-slate-800">Standar T568A</th>
+                  <th class="p-2.5 border-b border-slate-800">Standar T568B</th>
+                  <th class="p-2.5 border-b border-slate-800">Fungsi (10/100BASE-TX)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800 bg-slate-950/60 font-mono">
+                <tr><td class="p-2 text-cyan-400 font-bold">Pin 1</td><td class="p-2 text-emerald-300">Putih Hijau</td><td class="p-2 text-orange-300">Putih Oranye</td><td class="p-2">TX+ (Transmit Data +)</td></tr>
+                <tr><td class="p-2 text-cyan-400 font-bold">Pin 2</td><td class="p-2 text-emerald-400">Hijau</td><td class="p-2 text-orange-400">Oranye</td><td class="p-2">TX- (Transmit Data -)</td></tr>
+                <tr><td class="p-2 text-cyan-400 font-bold">Pin 3</td><td class="p-2 text-orange-300">Putih Oranye</td><td class="p-2 text-emerald-300">Putih Hijau</td><td class="p-2">RX+ (Receive Data +)</td></tr>
+                <tr><td class="p-2 text-slate-500">Pin 4 &amp; 5</td><td class="p-2 text-blue-400">Biru / Putih Biru</td><td class="p-2 text-blue-400">Biru / Putih Biru</td><td class="p-2 text-slate-400">Cadangan / PoE / Gigabit</td></tr>
+                <tr><td class="p-2 text-cyan-400 font-bold">Pin 6</td><td class="p-2 text-orange-400">Oranye</td><td class="p-2 text-emerald-400">Hijau</td><td class="p-2">RX- (Receive Data -)</td></tr>
+                <tr><td class="p-2 text-slate-500">Pin 7 &amp; 8</td><td class="p-2 text-amber-700">Putih Cokelat / Cokelat</td><td class="p-2 text-amber-700">Putih Cokelat / Cokelat</td><td class="p-2 text-slate-400">Cadangan / PoE / Gigabit</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 3. Sinyal Listrik vs Cahaya -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3.5">
+          <h4 class="text-white font-bold text-sm mb-1.5"><i class="fa-solid fa-wave-square text-purple-400 mr-1"></i> Karakteristik Sinyal Listrik vs Sinyal Optik</h4>
+          <p class="text-xs text-slate-400">
+            Pada kabel tembaga (UTP &amp; Coaxial), bit biner <strong>1</strong> dan <strong>0</strong> direpresentasikan sebagai perubahan tegangan listrik (misal +2.5V dan 0V). Sinyal ini mengalami hambatan resistansi tembaga sehingga melemah pada jarak jauh (<em>attenuation</em>) serta mudah terdistorsi medan elektromagnetik (<em>EMI/Crosstalk</em>). Sebaliknya, Fiber Optik mengubah bit menjadi kedipan cahaya laser (ON = 1, OFF = 0) melalui pemantulan internal sempurna sehingga bebas dari induksi listrik.
+          </p>
+        </div>
+      </div>
+
+      <div class="px-5 py-3 border-t border-slate-800 bg-slate-900 flex justify-end">
+        <button onclick="closeModal('modalTeori')" class="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold transition">
+          Mengerti &amp; Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 2: INSTRUKSI PRAKTIKUM ==================== -->
+  <div id="modalInstruksi" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-cyber-panel border border-slate-700 rounded-2xl max-w-3xl w-full max-h-[88vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-900">
+        <h3 class="text-base sm:text-lg font-bold text-amber-400 flex items-center gap-2">
+          <i class="fa-solid fa-list-check"></i> Instruksi Praktikum Lab Maya TJKT
+        </h3>
+        <button onclick="closeModal('modalInstruksi')" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-rose-500/20 hover:text-rose-400 text-slate-400 flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-5 overflow-y-auto space-y-4 text-xs sm:text-sm text-slate-300">
+        <p class="text-slate-400">Lakukan <strong>4 skenario percobaan</strong> berikut secara berurutan pada simulator untuk memahami perilaku Lapisan Fisik (Physical Layer):</p>
+
+        <div class="space-y-3">
+          <div class="bg-slate-900 border-l-4 border-cyan-500 rounded-r-xl p-3.5">
+            <div class="font-bold text-white mb-1">Percobaan 1: Koneksi Perangkat Berbeda Jenis (Straight-Through)</div>
+            <p class="text-xs text-slate-400">Atur <strong>Node A = PC / Workstation</strong>, <strong>Node B = Switch Layer 2</strong>, Kabel = <strong>UTP Straight-Through</strong>, Jarak = <strong>50 m</strong>, Auto-MDIX = <strong>OFF</strong>, EMI = <strong>Rendah</strong>. Klik <em>Uji &amp; Kirim Paket</em>. Amati jalannya bit dan hasil pada Osiloskop.</p>
+          </div>
+
+          <div class="bg-slate-900 border-l-4 border-rose-500 rounded-r-xl p-3.5">
+            <div class="font-bold text-white mb-1">Percobaan 2: Koneksi Perangkat Sejenis &amp; Pengujian Cross-Over</div>
+            <p class="text-xs text-slate-400">Ubah <strong>Node A = PC</strong> dan <strong>Node B = PC</strong> dengan kabel <strong>UTP Straight-Through</strong> (Auto-MDIX OFF). Amati kegagalan pinout TX-to-TX pada log. Kemudian ganti kabel menjadi <strong>UTP Cross-Over</strong> dan uji kembali.</p>
+          </div>
+
+          <div class="bg-slate-900 border-l-4 border-amber-500 rounded-r-xl p-3.5">
+            <div class="font-bold text-white mb-1">Percobaan 3: Pengaruh Jarak (Attenuation) &amp; Interferensi EMI</div>
+            <p class="text-xs text-slate-400">Hubungkan <strong>PC ke Switch</strong> menggunakan UTP Straight-Through, lalu naikkan slider <strong>Jarak Kabel menjadi 180 meter</strong> dan ubah <strong>EMI menjadi Tinggi</strong>. Perhatikan kerusakan bit (Bit Error Rate) pada kolom kanan.</p>
+          </div>
+
+          <div class="bg-slate-900 border-l-4 border-purple-500 rounded-r-xl p-3.5">
+            <div class="font-bold text-white mb-1">Percobaan 4: Solusi Jarak Jauh &amp; Bebas EMI dengan Fiber Optik</div>
+            <p class="text-xs text-slate-400">Atur <strong>Node A = OLT / Media Converter</strong>, <strong>Node B = ONT / Media Converter</strong>, Media = <strong>Fiber Optik Single-Mode</strong>, Jarak = <strong>850 meter</strong>, EMI = <strong>Tinggi</strong>. Bandingkan stabilitas sinyalnya dengan kabel tembaga!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-5 py-3 border-t border-slate-800 bg-slate-900 flex justify-between items-center">
+        <span class="text-xs text-slate-400">Setelah selesai mencoba, kerjakan kuis pada menu <strong>Pertanyaan LKPD</strong>.</span>
+        <button onclick="closeModal('modalInstruksi')" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition">
+          Mulai Praktikum
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 3: PERTANYAAN LKPD INTERAKTIF ==================== -->
+  <div id="modalLkpd" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-cyber-panel border border-slate-700 rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-900">
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-cyan-400 flex items-center gap-2">
+            <i class="fa-solid fa-clipboard-question"></i> Lembar Kerja Peserta Didik (LKPD) — Evaluasi TJKT
+          </h3>
+          <p class="text-xs text-slate-400">Jawab seluruh pertanyaan berdasarkan hasil praktikum simulasi Anda.</p>
+        </div>
+        <button onclick="closeModal('modalLkpd')" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-rose-500/20 hover:text-rose-400 text-slate-400 flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div id="lkpdBody" class="p-5 overflow-y-auto space-y-4 text-xs sm:text-sm">
+        <!-- Identitas Siswa -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-900/90 border border-slate-800 p-3 rounded-xl">
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Nama Lengkap Siswa</label>
+            <input type="text" id="studentName" placeholder="Masukkan nama Anda..." class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white outline-none focus:border-cyan-500" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-400 mb-1">Kelas / Kompetensi Keahlian</label>
+            <input type="text" id="studentClass" placeholder="Contoh: X TJKT 1" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white outline-none focus:border-cyan-500" />
+          </div>
+        </div>
+
+        <!-- Container Soal Kuis (Di-render via JS) -->
+        <div id="quizContainer" class="space-y-4"></div>
+
+        <!-- Hasil Skor Kuis -->
+        <div id="quizResultBox" class="hidden bg-slate-900 border border-cyan-500/40 rounded-xl p-4 space-y-2"></div>
+      </div>
+
+      <div class="px-5 py-3 border-t border-slate-800 bg-slate-900 flex flex-wrap items-center justify-between gap-2">
+        <button onclick="resetQuiz()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition">
+          Ulangi Kuis
+        </button>
+        <div class="flex items-center gap-2">
+          <button onclick="submitQuiz()" class="px-5 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-600 hover:from-emerald-400 hover:to-cyan-500 text-slate-950 text-xs font-bold shadow-lg transition">
+            <i class="fa-solid fa-check-double mr-1"></i> Periksa Jawaban &amp; Nilai
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+  <script>
+    // ==================== KONFIGURASI DATABASE PERANGKAT & MEDIA ====================
+    const DEVICES = {
+      pc: {
+        name: "PC / Workstation",
+        mdiType: "MDI", // Transmit di Pin 1,2; Receive di Pin 3,6
+        ports: ["utp_straight", "utp_cross", "coaxial"],
+        portDesc: "RJ45 (MDI) / BNC",
+        icon: "\uf108" // fa-desktop
+      },
+      switch: {
+        name: "Switch Layer 2",
+        mdiType: "MDIX", // Transmit di Pin 3,6; Receive di Pin 1,2
+        ports: ["utp_straight", "utp_cross"],
+        portDesc: "RJ45 (MDIX)",
+        icon: "\uf233" // fa-server
+      },
+      router: {
+        name: "Router Enterprise",
+        mdiType: "MDI",
+        ports: ["utp_straight", "utp_cross", "fiber_sm"],
+        portDesc: "RJ45 (MDI) / SFP",
+        icon: "\uf6ff" // fa-network-wired
+      },
+      hub: {
+        name: "Ethernet Hub",
+        mdiType: "MDIX",
+        ports: ["utp_straight", "utp_cross", "coaxial"],
+        portDesc: "RJ45 (MDIX) / BNC",
+        icon: "\uf1e6" // fa-plug
+      },
+      olt: {
+        name: "OLT / Media Converter",
+        mdiType: "OPTICAL",
+        ports: ["fiber_sm"],
+        portDesc: "SFP Optical LC/SC",
+        icon: "\uf519" // fa-broadcast-tower
+      },
+      ont: {
+        name: "ONT / Media Converter",
+        mdiType: "OPTICAL",
+        ports: ["fiber_sm"],
+        portDesc: "Optical Port SC/LC",
+        icon: "\uf1eb" // fa-wifi / modem
+      }
+    };
+
+    const MEDIA = {
+      utp_straight: {
+        name: "UTP Straight-Through",
+        fullName: "UTP Cat5e/Cat6 (Straight T568B–T568B)",
+        maxDist: 100,
+        attenPer100m: 22.0, // dB per 100m pada 100MHz
+        signalType: "Listrik (Tegangan)",
+        speedText: "~2.0 × 10⁸ m/s",
+        emiSusceptibility: 1.0, // Sangat rentan
+        isOptical: false
+      },
+      utp_cross: {
+        name: "UTP Cross-Over",
+        fullName: "UTP Cat5e/Cat6 (Cross-Over T568A–T568B)",
+        maxDist: 100,
+        attenPer100m: 22.0,
+        signalType: "Listrik (Tegangan)",
+        speedText: "~2.0 × 10⁸ m/s",
+        emiSusceptibility: 1.0,
+        isOptical: false
+      },
+      coaxial: {
+        name: "Coaxial RG-6 / BNC",
+        fullName: "Kabel Coaxial RG-6 / RG-58 (BNC)",
+        maxDist: 500,
+        attenPer100m: 6.5,
+        signalType: "Listrik (RF/Baseband)",
+        speedText: "~2.3 × 10⁸ m/s",
+        emiSusceptibility: 0.45, // Terlindung shield
+        isOptical: false
+      },
+      fiber_sm: {
+        name: "Fiber Optik Single-Mode",
+        fullName: "Fiber Optik Single-Mode (LC-SC)",
+        maxDist: 10000, // >10 km (slider maks 1000m selalu aman)
+        attenPer100m: 0.04, // ~0.4 dB/km
+        signalType: "Cahaya Laser (Foton)",
+        speedText: "~2.0 × 10⁸ m/s (10 Gbps+)",
+        emiSusceptibility: 0.0, // 100% kebal EMI
+        isOptical: true
+      }
+    };
+
+    let simulationTimer = null;
+    let animationFrameId = null;
+    let isSimulating = false;
+
+    // ==================== FUNGSI EVALUASI LOGIKA FISIK ====================
+    function evaluateConfiguration() {
+      const nodeAKey = document.getElementById("nodeA").value;
+      const nodeBKey = document.getElementById("nodeB").value;
+      const mediaKey = document.getElementById("mediaType").value;
+      const distance = parseInt(document.getElementById("distanceSlider").value, 10);
+      const emi = document.getElementById("emiLevel").value;
+      const autoMdix = document.getElementById("autoMdixToggle").checked;
+      const rawBits = document.getElementById("binaryInput").value.padEnd(8, "0").slice(0, 8);
+
+      const devA = DEVICES[nodeAKey];
+      const devB = DEVICES[nodeBKey];
+      const media = MEDIA[mediaKey];
+
+      // 1. Cek Kompatibilitas Fisik Port (RJ45 vs BNC vs Optical)
+      const portACompat = devA.ports.includes(mediaKey);
+      const portBCompat = devB.ports.includes(mediaKey);
+
+      if (!portACompat || !portBCompat) {
+        return {
+          status: "PORT_MISMATCH",
+          badgeText: "PORT TIDAK KOMPATIBEL",
+          badgeColor: "rose",
+          success: false,
+          attenuationDb: 99.9,
+          snrDb: 0,
+          txBits: rawBits,
+          rxBits: "XXXXXXXX",
+          ber: "100% (No Link)",
+          integrity: "0%",
+          reason: `Antarmuka fisik tidak cocok! ${!portACompat ? devA.name : devB.name} tidak memiliki port fisik untuk ${media.name}.`,
+          advice: "Gunakan media kabel yang sesuai dengan konektor perangkat (misal RJ45 untuk UTP, atau OLT/ONT/Router SFP untuk Fiber Optik)."
+        };
+      }
+
+      // 2. Cek Kecocokan Pinout TX/RX untuk UTP (Straight vs Cross-Over)
+      if (mediaKey === "utp_straight" || mediaKey === "utp_cross") {
+        const isSameMdi = devA.mdiType === devB.mdiType; // Misal PC (MDI) ke PC (MDI), atau Switch (MDIX) ke Switch (MDIX)
+        let pinoutValid = false;
+
+        if (autoMdix) {
+          pinoutValid = true;
+        } else {
+          if (isSameMdi && mediaKey === "utp_cross") pinoutValid = true;
+          if (!isSameMdi && mediaKey === "utp_straight") pinoutValid = true;
+        }
+
+        if (!pinoutValid) {
+          const jenisKoneksi = isSameMdi ? "perangkat sejenis (" + devA.mdiType + " ke " + devB.mdiType + ")" : "perangkat berbeda jenis (" + devA.mdiType + " ke " + devB.mdiType + ")";
+          const kabelSaran = isSameMdi ? "UTP Cross-Over (T568A–T568B)" : "UTP Straight-Through (T568B–T568B)";
+          return {
+            status: "PINOUT_ERROR",
+            badgeText: "PINOUT SALAH / COLLISION",
+            badgeColor: "rose",
+            success: false,
+            attenuationDb: ((distance / 100) * media.attenPer100m).toFixed(2),
+            snrDb: 0,
+            txBits: rawBits,
+            rxBits: "00000000",
+            ber: "100% (Link Down)",
+            integrity: "0%",
+            reason: `Terjadi tabrakan jalur TX-to-TX pada koneksi ${jenisKoneksi} menggunakan ${media.name} dengan Auto-MDIX nonaktif.`,
+            advice: `Ganti jenis kabel menjadi ${kabelSaran}, atau aktifkan fitur Auto-MDI/MDIX pada pengaturan.`
+          };
+        }
+      }
+
+      // 3. Kalkulasi Redaman (Attenuation) berdasarkan Jarak
+      const attenuationDb = parseFloat(((distance / 100) * media.attenPer100m).toFixed(2));
+      const overDistance = distance > media.maxDist;
+
+      // 4. Kalkulasi Pengaruh EMI & SNR (Signal-to-Noise Ratio)
+      let emiPenalty = 0;
+      if (emi === "medium") emiPenalty = 12 * media.emiSusceptibility;
+      if (emi === "high") emiPenalty = 26 * media.emiSusceptibility;
+
+      const distPenalty = overDistance ? ((distance - media.maxDist) / media.maxDist) * 28 : (distance / media.maxDist) * 6;
+      const snrDb = Math.max(2, parseFloat((36 - emiPenalty - distPenalty).toFixed(1)));
+
+      // 5. Simulasi Bit Error berdasarkan SNR & Jarak
+      let rxArray = rawBits.split("");
+      let errorCount = 0;
+
+      // Probabilitas bit terbalik (bit-flip) jika sinyal lemah atau EMI tinggi
+      let errorProb = 0;
+      if (overDistance) errorProb += Math.min(0.65, (distance - media.maxDist) / 350);
+      if (!media.isOptical) {
+        if (emi === "medium") errorProb += 0.12 * media.emiSusceptibility;
+        if (emi === "high") errorProb += 0.35 * media.emiSusceptibility;
+      }
+
+      if (errorProb > 0) {
+        rxArray = rxArray.map((bit, idx) => {
+          // Deterministik pseudo-random berbasis posisi bit + jarak agar konsisten & edukatif
+          const hash = ((idx * 17 + distance + (emi === "high" ? 7 : 3)) % 100) / 100;
+          if (hash < errorProb) {
+            errorCount++;
+            return bit === "1" ? "0" : "1";
+          }
+          return bit;
+        });
+      }
+
+      const rxBits = rxArray.join("");
+      const berPercent = ((errorCount / 8) * 100).toFixed(1);
+      const integrityPercent = (100 - parseFloat(berPercent)).toFixed(1);
+
+      if (overDistance || errorCount > 0) {
+        let issueTitle = overDistance ? "SINYAL MELEMAH / ATTENUATION" : "DISTORSI NOISE EMI (BIT ERROR)";
+        let reasonText = "";
+        let adviceText = "";
+
+        if (overDistance && errorCount > 0) {
+          reasonText = `Panjang kabel (${distance} m) melampaui batas maksimal ${media.name} (${media.maxDist} m) dan terganggu interferensi EMI, menyebabkan ${errorCount} dari 8 bit mengalami kerusakan (BER ${berPercent}%).`;
+          adviceText = `Kurangi jarak kabel di bawah ${media.maxDist} m, tambahkan Repeater/Switch di tengah jalur, atau beralih ke Fiber Optik Single-Mode.`;
+        } else if (overDistance) {
+          reasonText = `Jarak ${distance} m melebihi standar maksimal ${media.name} (${media.maxDist} m). Amplitudo tegangan turun drastis sehingga penerima gagal membaca sebagian bit.`;
+          adviceText = `Gunakan media dengan jangkauan lebih jauh (Coaxial hingga 500 m atau Fiber Optik >1000 m).`;
+        } else {
+          reasonText = `Medan elektromagnetik (EMI) menginduksi noise pada konduktor tembaga ${media.name}, membalikkan ${errorCount} bit data (SNR turun menjadi ${snrDb} dB).`;
+          adviceText = `Jauhkan jalur kabel tembaga dari sumber listrik tegangan tinggi atau ganti media ke Fiber Optik yang kebal EMI.`;
+        }
+
+        return {
+          status: "DEGRADED",
+          badgeText: issueTitle,
+          badgeColor: "amber",
+          success: false,
+          attenuationDb,
+          snrDb,
+          txBits: rawBits,
+          rxBits,
+          ber: `${berPercent}% (${errorCount}/8 bit)`,
+          integrity: `${integrityPercent}%`,
+          reason: reasonText,
+          advice: adviceText
+        };
+      }
+
+      // Kondisi Optimal / Valid
+      return {
+        status: "VALID",
+        badgeText: "KONEKSI VALID & OPTIMAL",
+        badgeColor: "emerald",
+        success: true,
+        attenuationDb,
+        snrDb,
+        txBits: rawBits,
+        rxBits,
+        ber: "0.0% (0/8 bit)",
+        integrity: "100%",
+        reason: `Transmisi berhasil sempurna! ${devA.name} terhubung ke ${devB.name} melalui ${media.name} (${distance} m) dengan SNR ${snrDb} dB.`,
+        advice: "Konfigurasi lapisan fisik memenuhi standar IEEE 802.3 / ITU-T. Paket data diterima utuh tanpa galat."
+      };
+    }
+
+    // ==================== UPDATE VISUAL PREVIEW REAL-TIME ====================
+    function updatePreview() {
+      const nodeAKey = document.getElementById("nodeA").value;
+      const nodeBKey = document.getElementById("nodeB").value;
+      const mediaKey = document.getElementById("mediaType").value;
+      const distance = parseInt(document.getElementById("distanceSlider").value, 10);
+      const emi = document.getElementById("emiLevel").value;
+      const bits = document.getElementById("binaryInput").value || "10110010";
+
+      const devA = DEVICES[nodeAKey];
+      const devB = DEVICES[nodeBKey];
+      const media = MEDIA[mediaKey];
+      const evalResult = evaluateConfiguration();
+
+      // Update Label Spesifikasi Media
+      document.getElementById("maxDistLabel").textContent = media.maxDist >= 1000 ? "> 1000 m (10+ km)" : `${media.maxDist} m`;
+      document.getElementById("signalTypeLabel").textContent = media.signalType;
+      document.getElementById("distanceValue").textContent = `${distance} meter`;
+
+      // Update Badge EMI
+      const emiBadge = document.getElementById("emiBadge");
+      if (emi === "low") {
+        emiBadge.textContent = "Rendah (Aman)";
+        emiBadge.className = "text-[11px] font-semibold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30";
+      } else if (emi === "medium") {
+        emiBadge.textContent = "Sedang (AC 220V)";
+        emiBadge.className = "text-[11px] font-semibold px-2 py-0.5 rounded bg-amber-500/15 text-amber-400 border border-amber-500/30";
+      } else {
+        emiBadge.textContent = "Tinggi (Mesin/Trafo)";
+        emiBadge.className = "text-[11px] font-semibold px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30";
+      }
+
+      // Update Overlay Kanvas Tengah
+      document.getElementById("overlayMedia").textContent = media.name;
+      document.getElementById("overlayDist").textContent = `${distance} m`;
+      document.getElementById("overlayAtten").textContent = `-${evalResult.attenuationDb} dB`;
+      document.getElementById("overlaySpeed").textContent = media.speedText;
+      document.getElementById("overlayBits").textContent = bits.padEnd(8, "0");
+
+      // Update Badge Kecocokan di Atas Kanvas
+      const statusBadge = document.getElementById("statusBadge");
+      const statusBadgeText = document.getElementById("statusBadgeText");
+      statusBadgeText.textContent = evalResult.badgeText;
+
+      if (evalResult.badgeColor === "emerald") {
+        statusBadge.className = "px-3 py-1 rounded-full text-xs font-bold tracking-wide flex items-center gap-1.5 bg-emerald-500/15 text-emerald-400 border border-emerald-500/40";
+        statusBadge.innerHTML = `<i class="fa-solid fa-circle-check"></i><span>${evalResult.badgeText}</span>`;
+      } else if (evalResult.badgeColor === "amber") {
+        statusBadge.className = "px-3 py-1 rounded-full text-xs font-bold tracking-wide flex items-center gap-1.5 bg-amber-500/15 text-amber-400 border border-amber-500/40";
+        statusBadge.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i><span>${evalResult.badgeText}</span>`;
+      } else {
+        statusBadge.className = "px-3 py-1 rounded-full text-xs font-bold tracking-wide flex items-center gap-1.5 bg-rose-500/15 text-rose-400 border border-rose-500/40";
+        statusBadge.innerHTML = `<i class="fa-solid fa-circle-xmark"></i><span>${evalResult.badgeText}</span>`;
+      }
+
+      // Update Visual Node A & Node B pada SVG
+      document.getElementById("iconNodeA").textContent = devA.icon;
+      document.getElementById("labelNodeA").textContent = devA.name;
+      document.getElementById("portNodeA").textContent = `Port: ${devA.portDesc}`;
+
+      document.getElementById("iconNodeB").textContent = devB.icon;
+      document.getElementById("labelNodeB").textContent = devB.name;
+      document.getElementById("portNodeB").textContent = `Port: ${devB.portDesc}`;
+
+      // Update Label Pinout Node B (MDI vs MDIX)
+      if (devB.mdiType === "MDIX") {
+        document.getElementById("pinB1").textContent = "1:RX+";
+        document.getElementById("pinB2").textContent = "2:RX-";
+        document.getElementById("pinB3").textContent = "3:TX+";
+        document.getElementById("pinB6").textContent = "6:TX-";
+      } else {
+        document.getElementById("pinB1").textContent = "1:TX+";
+        document.getElementById("pinB2").textContent = "2:TX-";
+        document.getElementById("pinB3").textContent = "3:RX+";
+        document.getElementById("pinB6").textContent = "6:RX-";
+      }
+
+      // Tampilkan Visual Kabel Sesuai Pilihan
+      document.getElementById("utpWiresGroup").classList.add("hidden");
+      document.getElementById("coaxWireGroup").classList.add("hidden");
+      document.getElementById("fiberWireGroup").classList.add("hidden");
+
+      if (mediaKey === "utp_straight") {
+        document.getElementById("utpWiresGroup").classList.remove("hidden");
+        document.getElementById("straightLines").classList.remove("hidden");
+        document.getElementById("crossLines").classList.add("hidden");
+      } else if (mediaKey === "utp_cross") {
+        document.getElementById("utpWiresGroup").classList.remove("hidden");
+        document.getElementById("straightLines").classList.add("hidden");
+        document.getElementById("crossLines").classList.remove("hidden");
+      } else if (mediaKey === "coaxial") {
+        document.getElementById("coaxWireGroup").classList.remove("hidden");
+      } else if (mediaKey === "fiber_sm") {
+        document.getElementById("fiberWireGroup").classList.remove("hidden");
+      }
+
+      // Tampilkan Zona EMI pada SVG
+      const emiGroup = document.getElementById("emiZoneGroup");
+      if (emi === "low") {
+        emiGroup.setAttribute("opacity", "0");
+      } else if (emi === "medium") {
+        emiGroup.setAttribute("opacity", "0.55");
+      } else {
+        emiGroup.setAttribute("opacity", "1");
+      }
+
+      // Update LED Port pada Node A & Node B
+      const ledA = document.getElementById("ledNodeA");
+      const ledB = document.getElementById("ledNodeB");
+      if (evalResult.status === "PORT_MISMATCH" || evalResult.status === "PINOUT_ERROR") {
+        ledA.setAttribute("fill", "#f43f5e");
+        ledB.setAttribute("fill", "#f43f5e");
+      } else if (evalResult.status === "DEGRADED") {
+        ledA.setAttribute("fill", "#f59e0b");
+        ledB.setAttribute("fill", "#f59e0b");
+      } else {
+        ledA.setAttribute("fill", "#10b981");
+        ledB.setAttribute("fill", "#10b981");
+      }
+
+      // Gambar ulang Osiloskop Mini
+      drawOscilloscopes(evalResult, media, distance, emi);
+    }
+
+    // ==================== GAMBAR GELOMBANG OSILOSKOP (TX & RX) ====================
+    function drawOscilloscopes(evalResult, media, distance, emi) {
+      const canvasTx = document.getElementById("canvasTx");
+      const canvasRx = document.getElementById("canvasRx");
+      if (!canvasTx || !canvasRx) return;
+
+      // Sesuaikan ukuran pixel dengan container
+      [canvasTx, canvasRx].forEach((c) => {
+        const rect = c.getBoundingClientRect();
+        c.width = rect.width || 300;
+        c.height = rect.height || 64;
+      });
+
+      const txBits = evalResult.txBits;
+      const rxBits = evalResult.rxBits;
+
+      // Update label informasi gelombang
+      document.getElementById("txVoltLabel").textContent = media.isOptical
+        ? "Laser ON / OFF (1550nm)"
+        : "+2.5V / 0V (NRZ)";
+
+      const rxQualityLabel = document.getElementById("rxQualityLabel");
+      const rxLegendColor = document.getElementById("rxLegendColor");
+      const rxLegendBar = document.getElementById("rxLegendBar");
+
+      if (evalResult.status === "PORT_MISMATCH" || evalResult.status === "PINOUT_ERROR") {
+        rxQualityLabel.textContent = "NO SIGNAL (0V / Link Down)";
+        rxQualityLabel.className = "text-rose-400";
+        rxLegendColor.className = "flex items-center gap-1 text-rose-400";
+        rxLegendBar.className = "w-2.5 h-0.5 bg-rose-400 inline-block";
+      } else if (evalResult.status === "DEGRADED") {
+        rxQualityLabel.textContent = `SNR: ${evalResult.snrDb} dB (Terdistorsi)`;
+        rxQualityLabel.className = "text-amber-400";
+        rxLegendColor.className = "flex items-center gap-1 text-amber-400";
+        rxLegendBar.className = "w-2.5 h-0.5 bg-amber-400 inline-block";
+      } else {
+        rxQualityLabel.textContent = `SNR: ${evalResult.snrDb} dB (Jernih)`;
+        rxQualityLabel.className = "text-emerald-400";
+        rxLegendColor.className = "flex items-center gap-1 text-emerald-400";
+        rxLegendBar.className = "w-2.5 h-0.5 bg-emerald-400 inline-block";
+      }
+
+      // Render Canvas TX (Gelombang Kotak Bersih)
+      renderWave(canvasTx, txBits, {
+        color: media.isOptical ? "#c084fc" : "#22d3ee",
+        amplitudeScale: 1.0,
+        noiseLevel: 0,
+        deadSignal: false
+      });
+
+      // Render Canvas RX (Dipengaruhi Redaman & EMI)
+      const isDead = evalResult.status === "PORT_MISMATCH" || evalResult.status === "PINOUT_ERROR";
+      const attenRatio = Math.max(0.28, 1 - (evalResult.attenuationDb / 65));
+      let noiseAmt = 0;
+      if (!media.isOptical) {
+        if (emi === "medium") noiseAmt = 4.5 * media.emiSusceptibility;
+        if (emi === "high") noiseAmt = 10.5 * media.emiSusceptibility;
+      }
+
+      renderWave(canvasRx, rxBits, {
+        color: isDead ? "#f43f5e" : evalResult.status === "DEGRADED" ? "#fbbf24" : "#34d399",
+        amplitudeScale: attenRatio,
+        noiseLevel: noiseAmt,
+        deadSignal: isDead
+      });
+    }
+
+    function renderWave(canvas, bits, opts) {
+      const ctx = canvas.getContext("2d");
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      // Grid latar osiloskop
+      ctx.strokeStyle = "rgba(51, 65, 85, 0.45)";
+      ctx.lineWidth = 1;
+      for (let i = 1; i < 8; i++) {
+        const gx = (w / 8) * i;
+        ctx.beginPath();
+        ctx.moveTo(gx, 0);
+        ctx.lineTo(gx, h);
+        ctx.stroke();
+      }
+      ctx.beginPath();
+      ctx.moveTo(0, h / 2);
+      ctx.lineTo(w, h / 2);
+      ctx.stroke();
+
+      // Gambar gelombang sinyal
+      ctx.strokeStyle = opts.color;
+      ctx.lineWidth = 2.2;
+      ctx.beginPath();
+
+      const bitWidth = w / 8;
+      const midY = h * 0.55;
+      const maxSwing = (h * 0.36) * opts.amplitudeScale;
+
+      if (opts.deadSignal) {
+        ctx.moveTo(0, h * 0.8);
+        ctx.lineTo(w, h * 0.8);
+        ctx.stroke();
+        return;
+      }
+
+      for (let i = 0; i < 8; i++) {
+        const bit = bits[i] === "1" ? 1 : 0;
+        const startX = i * bitWidth;
+        const endX = (i + 1) * bitWidth;
+        const baseY = bit === 1 ? midY - maxSwing : midY + maxSwing * 0.7;
+
+        const steps = 8;
+        for (let s = 0; s <= steps; s++) {
+          const px = startX + (bitWidth / steps) * s;
+          const jitter = opts.noiseLevel > 0 ? Math.sin(i * 11 + s * 5) * opts.noiseLevel : 0;
+          const py = Math.max(4, Math.min(h - 4, baseY + jitter));
+          if (i === 0 && s === 0) {
+            ctx.moveTo(px, py);
+          } else {
+            ctx.lineTo(px, py);
+          }
+        }
+      }
+      ctx.stroke();
+    }
+
+    // ==================== SIMULASI REAL-TIME & ANIMASI PAKET BIT ====================
+    function startSimulation() {
+      if (isSimulating) return;
+      isSimulating = true;
+
+      const btnRun = document.getElementById("btnRunSim");
+      btnRun.disabled = true;
+      btnRun.classList.add("opacity-60", "cursor-not-allowed");
+
+      const consoleEl = document.getElementById("consoleLog");
+      consoleEl.innerHTML = "";
+
+      const nodeAKey = document.getElementById("nodeA").value;
+      const nodeBKey = document.getElementById("nodeB").value;
+      const mediaKey = document.getElementById("mediaType").value;
+      const distance = parseInt(document.getElementById("distanceSlider").value, 10);
+      const emi = document.getElementById("emiLevel").value;
+      const devA = DEVICES[nodeAKey];
+      const devB = DEVICES[nodeBKey];
+      const media = MEDIA[mediaKey];
+      const evalResult = evaluateConfiguration();
+
+      // Nyalakan kedip LED aktivitas
+      document.getElementById("actNodeA").setAttribute("opacity", "1");
+      document.getElementById("actNodeA").classList.add("led-blink");
+
+      const steps = [
+        {
+          delay: 150,
+          type: "info",
+          text: `Inisialisasi transmisi dari [${devA.name}] menuju [${devB.name}]...`
+        },
+        {
+          delay: 650,
+          type: evalResult.status === "PORT_MISMATCH" ? "error" : "ok",
+          text: `Step 1 (Interface): Cek kompatibilitas port ${devA.portDesc} ↔ ${media.name} ↔ ${devB.portDesc}.`
+        },
+        {
+          delay: 1250,
+          type: evalResult.status === "PINOUT_ERROR" ? "error" : "ok",
+          text: `Step 2 (Pinout TX/RX): Verifikasi skema jalur ${media.fullName}.`
+        },
+        {
+          delay: 1850,
+          type: distance > media.maxDist ? "warn" : "ok",
+          text: `Step 3 (Attenuation): Jarak ${distance} m (Maks ${media.maxDist >= 1000 ? "1000+ m" : media.maxDist + " m"}) → Redaman -${evalResult.attenuationDb} dB.`
+        },
+        {
+          delay: 2450,
+          type: !media.isOptical && emi !== "low" ? "warn" : "ok",
+          text: `Step 4 (EMI & Noise): Tingkat interferensi [${emi.toUpperCase()}] → Estimasi SNR ${evalResult.snrDb} dB.`
+        },
+        {
+          delay: 3200,
+          type: evalResult.success ? "success" : "error",
+          text: `Step 5 (Frame Check): Tx [${evalResult.txBits}] vs Rx [${evalResult.rxBits}] | BER: ${evalResult.ber}.`
+        }
+      ];
+
+      // Jalankan animasi perambatan pulsa sinyal pada SVG
+      animateSignalPulses(evalResult, media, emi);
+
+      // Cetak log bertahap
+      steps.forEach((step) => {
+        setTimeout(() => {
+          appendLog(step.type, step.text);
+        }, step.delay);
+      });
+
+      // Tampilkan hasil evaluasi akhir setelah animasi selesai
+      setTimeout(() => {
+        document.getElementById("actNodeA").classList.remove("led-blink");
+        document.getElementById("actNodeA").setAttribute("opacity", "0.3");
+        if (evalResult.success || evalResult.status === "DEGRADED") {
+          document.getElementById("actNodeB").setAttribute("opacity", "1");
+          setTimeout(() => document.getElementById("actNodeB").setAttribute("opacity", "0.3"), 800);
+        }
+
+        renderEvaluationCard(evalResult);
+        isSimulating = false;
+        btnRun.disabled = false;
+        btnRun.classList.remove("opacity-60", "cursor-not-allowed");
+      }, 3400);
+    }
+
+    function animateSignalPulses(evalResult, media, emi) {
+      const layer = document.getElementById("signalPacketLayer");
+      layer.innerHTML = "";
+
+      const bits = evalResult.txBits;
+      const startX = 185;
+      const endX = 615;
+      const centerY = 170;
+      const blocked = evalResult.status === "PORT_MISMATCH" || evalResult.status === "PINOUT_ERROR";
+      const stopX = blocked ? 235 : endX;
+
+      const startTime = performance.now();
+      const duration = blocked ? 1400 : 3100;
+
+      function frame(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(1, elapsed / duration);
+        layer.innerHTML = "";
+
+        for (let i = 0; i < 8; i++) {
+          const bitOffset = i * 0.085;
+          const localProg = (progress - bitOffset) / (1 - 0.68);
+          if (localProg < 0 || localProg > 1) continue;
+
+          const currentX = startX + (stopX - startX) * localProg;
+          const bitVal = bits[i];
+          const isFlipped = evalResult.rxBits[i] !== bitVal && localProg > 0.55 && !blocked;
+          const displayBit = isFlipped ? evalResult.rxBits[i] : bitVal;
+
+          // Efek getar jika terkena EMI pada kabel tembaga
+          let jitterY = 0;
+          if (!media.isOptical && emi !== "low" && currentX > 315 && currentX < 485) {
+            jitterY = Math.sin(elapsed * 0.05 + i * 3) * (emi === "high" ? 10 : 4);
+          }
+
+          const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+          g.setAttribute("transform", `translate(${currentX}, ${centerY + jitterY})`);
+
+          if (media.isOptical) {
+            // Pulsa Cahaya Laser (Foton)
+            const glowCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            glowCircle.setAttribute("r", displayBit === "1" ? "9" : "5");
+            glowCircle.setAttribute("fill", displayBit === "1" ? "#e879f9" : "#38bdf8");
+            glowCircle.setAttribute("opacity", displayBit === "1" ? "0.95" : "0.55");
+            glowCircle.setAttribute("filter", "url(#neonGlow)");
+            g.appendChild(glowCircle);
+          } else {
+            // Pulsa Tegangan Listrik
+            const pill = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            pill.setAttribute("x", "-10");
+            pill.setAttribute("y", "-10");
+            pill.setAttribute("width", "20");
+            pill.setAttribute("height", "20");
+            pill.setAttribute("rx", "6");
+            pill.setAttribute(
+              "fill",
+              blocked ? "#f43f5e" : isFlipped ? "#f59e0b" : displayBit === "1" ? "#06b6d4" : "#1e293b"
+            );
+            pill.setAttribute("stroke", "#ffffff");
+            pill.setAttribute("stroke-width", "1");
+            g.appendChild(pill);
+          }
+
+          // Label angka bit (1 atau 0)
+          const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          txt.setAttribute("text-anchor", "middle");
+          txt.setAttribute("dy", "4");
+          txt.setAttribute("fill", "#ffffff");
+          txt.setAttribute("font-size", "11");
+          txt.setAttribute("font-weight", "bold");
+          txt.setAttribute("font-family", "JetBrains Mono");
+          txt.textContent = blocked && localProg > 0.7 ? "✕" : displayBit;
+          g.appendChild(txt);
+
+          layer.appendChild(g);
+        }
+
+        if (progress < 1) {
+          animationFrameId = requestAnimationFrame(frame);
+        } else {
+          layer.innerHTML = "";
+        }
+      }
+
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      animationFrameId = requestAnimationFrame(frame);
+    }
+
+    function appendLog(type, message) {
+      const consoleEl = document.getElementById("consoleLog");
+      const now = new Date();
+      const ts = now.toTimeString().split(" ")[0];
+
+      const colorMap = {
+        info: "text-slate-300",
+        ok: "text-cyan-400",
+        warn: "text-amber-400",
+        error: "text-rose-400",
+        success: "text-emerald-400 font-bold"
+      };
+
+      const div = document.createElement("div");
+      div.className = colorMap[type] || "text-slate-300";
+      div.innerHTML = `<span class="text-slate-500">[${ts}]</span> ${message}`;
+      consoleEl.appendChild(div);
+      consoleEl.scrollTop = consoleEl.scrollHeight;
+    }
+
+    function renderEvaluationCard(res) {
+      const card = document.getElementById("evalCard");
+      const pill = document.getElementById("evalStatusPill");
+      const txEl = document.getElementById("evalTxBits");
+      const rxEl = document.getElementById("evalRxBits");
+      const berEl = document.getElementById("evalBer");
+      const intEl = document.getElementById("evalIntegrity");
+      const diagEl = document.getElementById("evalDiagnosis");
+
+      txEl.textContent = res.txBits;
+      rxEl.textContent = res.rxBits;
+      berEl.textContent = res.ber;
+      intEl.textContent = res.integrity;
+
+      if (res.success) {
+        card.className = "bg-emerald-950/30 border border-emerald-500/50 rounded-xl p-3.5 space-y-2.5 transition-all";
+        pill.className = "px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40";
+        pill.textContent = "BERHASIL (VALID)";
+        rxEl.className = "text-emerald-400 font-bold tracking-widest";
+        diagEl.innerHTML = `<div class="text-emerald-300 font-semibold mb-1"><i class="fa-solid fa-circle-check mr-1"></i> ${res.reason}</div><div class="text-slate-300 text-[11px]">💡 <strong>Catatan Teknis:</strong> ${res.advice}</div>`;
+      } else {
+        const isAmber = res.badgeColor === "amber";
+        card.className = isAmber
+          ? "bg-amber-950/30 border border-amber-500/50 rounded-xl p-3.5 space-y-2.5 transition-all"
+          : "bg-rose-950/30 border border-rose-500/50 rounded-xl p-3.5 space-y-2.5 transition-all";
+        pill.className = isAmber
+          ? "px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40"
+          : "px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40";
+        pill.textContent = isAmber ? "GAGAL (DEGRADASI)" : "GAGAL (LINK DOWN)";
+        rxEl.className = isAmber ? "text-amber-400 font-bold tracking-widest" : "text-rose-400 font-bold tracking-widest";
+        diagEl.innerHTML = `<div class="${isAmber ? "text-amber-300" : "text-rose-300"} font-semibold mb-1"><i class="fa-solid fa-triangle-exclamation mr-1"></i> ${res.reason}</div><div class="text-slate-300 text-[11px]">🔧 <strong>Saran Perbaikan:</strong> ${res.advice}</div>`;
+      }
+    }
+
+    // ==================== HELPER INPUT & RESET ====================
+    function sanitizeBinaryInput(el) {
+      el.value = el.value.replace(/[^01]/g, "").slice(0, 8);
+      updatePreview();
+    }
+
+    function randomizeBits() {
+      let bits = "";
+      for (let i = 0; i < 8; i++) {
+        bits += Math.random() > 0.5 ? "1" : "0";
+      }
+      document.getElementById("binaryInput").value = bits;
+      updatePreview();
+    }
+
+    function resetSimulation() {
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      isSimulating = false;
+      document.getElementById("signalPacketLayer").innerHTML = "";
+
+      document.getElementById("nodeA").value = "pc";
+      document.getElementById("nodeB").value = "switch";
+      document.getElementById("mediaType").value = "utp_straight";
+      document.getElementById("autoMdixToggle").checked = false;
+      document.getElementById("distanceSlider").value = 50;
+      document.getElementById("emiLevel").value = "low";
+      document.getElementById("binaryInput").value = "10110010";
+
+      document.getElementById("consoleLog").innerHTML = `
+        <div class="text-slate-500">[00:00:00] Konfigurasi di-reset ke pengaturan standar.</div>
+        <div class="text-cyan-400">[INFO] Klik <span class="underline font-bold">"Uji &amp; Kirim Paket"</span> untuk memulai simulasi.</div>
+      `;
+
+      document.getElementById("evalCard").className = "bg-slate-900 border border-slate-700 rounded-xl p-3.5 space-y-2.5 transition-all";
+      document.getElementById("evalStatusPill").className = "px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-800 text-slate-300 border border-slate-600";
+      document.getElementById("evalStatusPill").textContent = "MENUNGGU UJI";
+      document.getElementById("evalTxBits").textContent = "10110010";
+      document.getElementById("evalRxBits").textContent = "--------";
+      document.getElementById("evalRxBits").className = "text-slate-400 font-bold tracking-widest";
+      document.getElementById("evalBer").textContent = "-";
+      document.getElementById("evalIntegrity").textContent = "-";
+      document.getElementById("evalDiagnosis").innerHTML = `<i class="fa-solid fa-circle-info text-cyan-400 mr-1"></i> Pilih konfigurasi di panel kiri lalu jalankan simulasi untuk melihat analisis teknis konektivitas lapisan fisik.`;
+
+      updatePreview();
+    }
+
+    // ==================== SISTEM MODAL & KUIS LKPD INTERAKTIF ====================
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    const LKPD_QUESTIONS = [
+      {
+        q: "1. Seorang teknisi TJKT ingin menghubungkan dua buah Switch Layer 2 lama yang belum mendukung fitur Auto-MDI/MDIX menggunakan kabel UTP. Susunan kabel manakah yang wajib digunakan agar tidak terjadi tabrakan sinyal TX-to-TX?",
+        options: [
+          "UTP Straight-Through (T568B ke T568B)",
+          "UTP Cross-Over (T568A ke T568B)",
+          "Kabel Rollover (Console)",
+          "Kabel Coaxial RG-58"
+        ],
+        answer: 1,
+        explanation: "Perangkat sejenis (Switch ke Switch atau PC ke PC) memiliki posisi pin TX dan RX yang sama, sehingga membutuhkan kabel Cross-Over untuk menyilangkan pin 1-2 ke pin 3-6."
+      },
+      {
+        q: "2. Berdasarkan standar IEEE 802.3 untuk jaringan Ethernet berbasis tembaga (UTP Cat5e/Cat6), berapakah panjang tarikan kabel maksimal yang direkomendasikan sebelum sinyal mengalami pelemahan (attenuation) signifikan?",
+        options: [
+          "50 meter",
+          "100 meter",
+          "500 meter",
+          "2.000 meter"
+        ],
+        answer: 1,
+        explanation: "Batas standar maksimal segmen kabel UTP adalah 100 meter (90m solid horizontal + 10m patchcord). Lebih dari itu dibutuhkan Repeater atau Switch."
+      },
+      {
+        q: "3. Sebuah jalur jaringan harus melewati area pabrik yang memiliki banyak motor listrik 3-fasa dan trafo bertegangan tinggi sejauh 650 meter. Media transmisi manakah yang paling tepat dipilih agar bebas dari gangguan EMI dan redaman jarak?",
+        options: [
+          "UTP Cat6 Unshielded",
+          "Kabel Coaxial RG-6",
+          "Fiber Optik Single-Mode",
+          "Kabel Telepon RJ11"
+        ],
+        answer: 2,
+        explanation: "Fiber Optik mentransmisikan pulsa cahaya melalui inti kaca silika sehingga 100% kebal terhadap interferensi elektromagnetik (EMI) dan mampu menjangkau jarak berkilo-kilometer."
+      },
+      {
+        q: "4. Pada standar pengkabelan TIA/EIA-568B, pin nomor berapakah pada konektor RJ45 yang berfungsi sebagai jalur Transmit Data (TX+ dan TX-) pada jaringan 10/100BASE-TX?",
+        options: [
+          "Pin 1 (Putih Oranye) dan Pin 2 (Oranye)",
+          "Pin 3 (Putih Hijau) dan Pin 6 (Hijau)",
+          "Pin 4 (Biru) dan Pin 5 (Putih Biru)",
+          "Pin 7 (Putih Cokelat) dan Pin 8 (Cokelat)"
+        ],
+        answer: 0,
+        explanation: "Pada standar T568B, pasangan kabel Oranye (Pin 1 dan Pin 2) bertugas mengirim sinyal (TX+/TX-), sedangkan pasangan Hijau (Pin 3 dan Pin 6) menerima sinyal (RX+/RX-)."
+      },
+      {
+        q: "5. Apa dampak utama yang terlihat pada osiloskop dan data biner ketika kabel UTP terkena interferensi elektromagnetik (EMI) tingkat tinggi?",
+        options: [
+          "Kecepatan rambat cahaya meningkat dua kali lipat",
+          "Gelombang tegangan terdistorsi noise sehingga terjadi bit-flip (Bit Error Rate meningkat)",
+          "Konektor RJ45 berubah menjadi konektor SC secara otomatis",
+          "Redaman kabel berkurang menjadi 0 dB"
+        ],
+        answer: 1,
+        explanation: "Induksi gelombang elektromagnetik eksternal merusak amplitudo sinyal listrik pada tembaga sehingga bit '1' bisa terbaca sebagai '0' (atau sebaliknya) di sisi penerima."
+      }
+    ];
+
+    function renderQuiz() {
+      const container = document.getElementById("quizContainer");
+      container.innerHTML = "";
+
+      LKPD_QUESTIONS.forEach((item, qIdx) => {
+        const card = document.createElement("div");
+        card.className = "bg-slate-900/90 border border-slate-800 rounded-xl p-3.5 space-y-2.5";
+        card.id = `quizCard_${qIdx}`;
+
+        let optionsHtml = "";
+        item.options.forEach((opt, oIdx) => {
+          optionsHtml += `
+            <label class="flex items-start gap-2.5 p-2 rounded-lg bg-slate-950/70 hover:bg-slate-800/80 border border-slate-800 cursor-pointer transition">
+              <input type="radio" name="q_${qIdx}" value="${oIdx}" class="mt-0.5 accent-cyan-500" />
+              <span class="text-xs text-slate-200">${opt}</span>
+            </label>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="font-semibold text-white text-xs sm:text-sm leading-snug">${item.q}</div>
+          <div class="space-y-1.5">${optionsHtml}</div>
+          <div id="feedback_${qIdx}" class="hidden text-[11px] p-2 rounded-lg mt-2"></div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      let unanswered = 0;
+
+      LKPD_QUESTIONS.forEach((item, qIdx) => {
+        const selected = document.querySelector(`input[name="q_${qIdx}"]:checked`);
+        const fbEl = document.getElementById(`feedback_${qIdx}`);
+        fbEl.classList.remove("hidden");
+
+        if (!selected) {
+          unanswered++;
+          fbEl.className = "text-[11px] p-2 rounded-lg mt-2 bg-amber-500/15 text-amber-300 border border-amber-500/30";
+          fbEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1"></i> Belum dijawab. <strong>Jawaban benar:</strong> ${item.options[item.answer]}.`;
+          return;
+        }
+
+        const val = parseInt(selected.value, 10);
+        if (val === item.answer) {
+          score++;
+          fbEl.className = "text-[11px] p-2 rounded-lg mt-2 bg-emerald-500/15 text-emerald-300 border border-emerald-500/30";
+          fbEl.innerHTML = `<i class="fa-solid fa-circle-check mr-1"></i> <strong>Tepat!</strong> ${item.explanation}`;
+        } else {
+          fbEl.className = "text-[11px] p-2 rounded-lg mt-2 bg-rose-500/15 text-rose-300 border border-rose-500/30";
+          fbEl.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1"></i> <strong>Kurang Tepat.</strong> Jawaban yang benar adalah <em>${item.options[item.answer]}</em>. ${item.explanation}`;
+        }
+      });
+
+      const finalGrade = Math.round((score / LKPD_QUESTIONS.length) * 100);
+      const studentName = document.getElementById("studentName").value.trim() || "Peserta Didik TJKT";
+      const studentClass = document.getElementById("studentClass").value.trim() || "Kelas TJKT";
+
+      const resultBox = document.getElementById("quizResultBox");
+      resultBox.classList.remove("hidden");
+      resultBox.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <div class="text-xs text-slate-400">Hasil Evaluasi LKPD — <strong class="text-white">${studentName}</strong> (${studentClass})</div>
+            <div class="text-sm font-bold ${finalGrade >= 80 ? "text-emerald-400" : finalGrade >= 60 ? "text-amber-400" : "text-rose-400"}">
+              Skor Akhir: ${finalGrade} / 100 (${score} dari ${LKPD_QUESTIONS.length} soal benar)
+            </div>
+          </div>
+          <span class="px-3 py-1 rounded-full text-xs font-bold ${finalGrade >= 75 ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40" : "bg-amber-500/20 text-amber-300 border border-amber-500/40"}">
+            ${finalGrade >= 75 ? "KOMPETEN (LULUS KKM)" : "PERLU PENGUATAN"}
+          </span>
+        </div>
+      `;
+      resultBox.scrollIntoView({ behavior: "smooth" });
+    }
+
+    function resetQuiz() {
+      renderQuiz();
+      const resultBox = document.getElementById("quizResultBox");
+      resultBox.classList.add("hidden");
+      resultBox.innerHTML = "";
+    }
+
+    // ==================== INISIALISASI SAAT HALAMAN DIMUAT ====================
+    window.addEventListener("DOMContentLoaded", () => {
+      renderQuiz();
+      updatePreview();
+    });
+
+    window.addEventListener("resize", () => {
+      updatePreview();
+    });
+  </script>
+</body>
+</html>
